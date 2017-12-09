@@ -1,0 +1,16 @@
+/* You can add global styles to this file, and also import other style files */
+body
+{
+    background-color: red;
+}
+h1
+{
+    padding-top:20px;
+    padding-bottom: 20px;
+    text-align: center;
+    text-transform: uppercase;
+}
+.alert p {
+    margin: 0px;
+    padding: 0px;
+}
