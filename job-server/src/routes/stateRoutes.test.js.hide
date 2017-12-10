@@ -1,0 +1,62 @@
+const expect = require('expect');
+const request = require('supertest');
+const {ObjectID} = require('mongodb');
+
+const {app} = require('./../server');
+const {City} = require('./../models/city');
+const {State} = require('./../models/state');
+const {Visit} = require('./../models/visit');
+const {User} = require('./../models/user');
+
+const {users, populateUsers} = require('./../tests/seed/seed');
+
+beforeEach(populateUsers);
+
+describe('GET /state/:stateCode/cities/', () => {
+
+  it('should return cities docs for a state code and no page or limit', (done) => {
+    request(app)
+      .get(`/state/al/cities`)
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.cities.length).toBe(10);
+      })
+      .end(done);
+  });
+
+  it('should return cities docs for a state code and the first city should be Anniston, AL', (done) => {
+    request(app)
+      .get(`/state/al/cities`)
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.cities[0].name).toBe("Anniston");
+        expect(res.body.cities[0].stateID).toBe(1);
+      })
+      .end(done);
+  });
+
+  it('should return the third page of cities docs for a state code and the first city should be Brookwood, AL', (done) => {
+    request(app)
+      .get(`/state/al/cities?page=3`)
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.cities[0].name).toBe("Brookwood");
+        expect(res.body.cities[0].stateID).toBe(1);
+      })
+      .end(done);
+  });
+
+  it('should return the third page of cities docs for a state code and a limit of 25 and the first city should be Florala, AL', (done) => {
+    request(app)
+      .get(`/state/al/cities?page=3&limit=25`)
+      .expect(200)
+      .expect((res) => {
+        expect(res.body.cities[0].name).toBe("Florala");
+        expect(res.body.cities[0].stateID).toBe(1);
+      })
+      .end(done);
+  });
+});
+
+
+

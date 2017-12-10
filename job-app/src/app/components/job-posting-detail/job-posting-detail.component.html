@@ -1,3 +1,27 @@
-<p>
-  job-posting-detail works!
-</p>
+<h1>Job Posting</h1>
+
+<div class="container">
+  <div class="row">
+  
+    <div class="col-12">
+        <h2>{{ job.position }} <span style="font-size: 12px; margin-left:20px;">posted on {{ job.postedDate | date: 'mediumDate' }}</span>
+        <div style="float:right;" *ngIf="hasPermission()">
+            <a class="btn btn-warning" [routerLink]="['/jobs/' + job.id + '/edit']">Edit</a>
+            <!-- <button class="btn btn-warning" (click)="edit(job.id)">Edit</button>
+             -->
+            <button class="btn btn-danger" (click)="delete(job.id)">Delete</button>
+        </div></h2>
+        <label>Location:</label> <span>{{ job.locationCity }}, {{ job.locationState }}</span><br />
+        <label>Company:</label> <span>{{ job.company }}</span><br />
+        <label>Type:</label> <span>{{ job.type }}</span><br />
+        <label>Pay:</label> <span>{{ job.payRate | currency : 'USD' : 'symbol' }}  {{ job.payPeriod }}</span><br />
+      
+        <div>
+          <label>Description:</label><br />
+          {{ job.description }}
+        </div> 
+  
+    </div>
+  </div>
+</div>
+<br /><br />
