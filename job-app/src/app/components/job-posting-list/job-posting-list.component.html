@@ -3,11 +3,11 @@
 <div *ngFor="let job of jobs; let i = index">
     <p>
       
-      <a [routerLink]="['/jobs/' + job.id]">
+      <a [routerLink]="['/jobs/' + job._id]">
         <span>{{ job.position }} {{ job.locationCity }}, {{ job.locationState }}</span>
       </a> <br/>
       <span>{{ job.company }} {{ job.type }} ({{ job.payRate | currency : 'USD' : 'symbol' }} / {{ job.payPeriod }})</span>
-      <span>{{ job.description.substring(0, 200) }} ... <a [routerLink]="['/jobs/' + job.id]" class="moreinfo">more info</a></span> 
+      <span>{{ job.description.substring(0, 200) }} ... <a [routerLink]="['/jobs/' + job._id]" class="moreinfo">more info</a></span> 
 
     </p>
 

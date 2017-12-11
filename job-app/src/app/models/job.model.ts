@@ -1,5 +1,5 @@
     export interface IJob {
-        id: number,
+        _id: string,
         position: string,
         locationCity: string,
         locationState: string,

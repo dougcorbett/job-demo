@@ -12,8 +12,10 @@ var {authenticate} = require('./../middleware/authenticate');
 
 var router = express.Router();
 
-router.post('/', authenticate, (req, res) => {
+router.post('/', (req, res) => {
     
+    //console.log(req); 
+
     var body = _.pick(req.body, ['position', 
                                  'locationCity', 
                                  'locationState', 
@@ -24,9 +26,9 @@ router.post('/', authenticate, (req, res) => {
                                  'description']);
 
     body.datePosted = new Date();
-    body._creator = req.user._id;
+    body._creator = new ObjectID(); // req.user._id;
 
-    //console.log(body); 
+    console.log(body); 
 
     var job = new Job(body);
 
@@ -41,7 +43,7 @@ router.get('/', (req, res) => {
     Job.find({})
     .then((jobs) => {
         if (!jobs) { return res.status(404).send({ error: 'No jobs found.' }); }
-        return res.status(200).send( { jobs });
+        return res.status(200).send( jobs );
     }, (e) => {
         return res.status(500).send({ error: 'Internal error.' });
     });
@@ -58,13 +60,13 @@ router.get('/:id', (req, res) => {
     Job.findOne({"_id": id})
     .then((job) => {
         if (!job) { return res.status(404).send({ error: 'No jobs found.' }); }
-        return res.send({ job });
+        return res.send( job );
     }, (e) => {
         return res.status(500).send({ error: 'Internal error.' });
     });
 });
 
-router.delete('/:id', authenticate, (req, res) => {
+router.delete('/:id', (req, res) => {
     var id = req.params.id;
     
     if (!ObjectID.isValid(id)) {
@@ -72,8 +74,8 @@ router.delete('/:id', authenticate, (req, res) => {
     }
     
     Job.findOneAndRemove({
-        _id: id,
-        _creator: req.user._id
+        _id: id//,
+        //_creator: req.user._id
     }).then((job) => {
         if (!job) {
         return res.status(404).send();
@@ -85,7 +87,7 @@ router.delete('/:id', authenticate, (req, res) => {
     });
 });
 
-router.patch('/:id', authenticate, (req, res) => {
+router.patch('/:id', (req, res) => {
     var id = req.params.id;
     var body = _.pick(req.body, ['position', 
                                  'locationCity', 
@@ -100,7 +102,10 @@ router.patch('/:id', authenticate, (req, res) => {
         return res.status(404).send();
     }
     
-    Job.findOneAndUpdate({_id: id, _creator: req.user._id}, {$set: body}, {new: true}).then((job) => {
+    Job.findOneAndUpdate({
+        _id: id, 
+    //    _creator: req.user._id
+    }, {$set: body}, {new: true}).then((job) => {
         if (!job) {
         return res.status(404).send();
         }

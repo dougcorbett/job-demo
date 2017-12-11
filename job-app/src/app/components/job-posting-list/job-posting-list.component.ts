@@ -16,7 +16,8 @@ export class JobPostingListComponent implements OnInit {
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
-    this.jobs = this.dataService.getJobs();
+    this.dataService.getJobs()
+      .subscribe(jobs => this.jobs = jobs );
   }
 
 }

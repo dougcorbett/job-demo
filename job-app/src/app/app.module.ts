@@ -16,14 +16,22 @@ import { JobPostingDetailComponent } from './components/job-posting-detail/job-p
 
 import { DataService } from './services/data.service';
 import { AuthService } from './services/auth.service';
-import { JobRouteActivatorService } from './components/job-posting-detail/job-route-activator.service'
+import { JobRouteActivatorService } from './components/job-posting-detail/job-route-activator.service';
+import { JobPostingNewComponent } from './components/job-posting-new/job-posting-new.component';
+import { JobPostingEditComponent } from './components/job-posting-edit/job-posting-edit.component';
+import { LoginComponent } from './components/login/login.component'
 
 
 const appRoutes: Routes = [
   { pathMatch: 'full',  path: '', component: HomeComponent },
   { pathMatch: 'full',  path: 'jobs', component: JobPostingListComponent },
-  { pathMatch: 'full',  path: 'jobs/:id', component: JobPostingDetailComponent, canActivate: [JobRouteActivatorService] },
+  { pathMatch: 'full',  path: 'jobs/new', component: JobPostingNewComponent },
+  // { pathMatch: 'full',  path: 'jobs/:id', component: JobPostingDetailComponent, canActivate: [JobRouteActivatorService] },
+  // { pathMatch: 'full',  path: 'jobs/:id/edit', component: JobPostingEditComponent, canActivate: [JobRouteActivatorService] },
+  { pathMatch: 'full',  path: 'jobs/:id', component: JobPostingDetailComponent },
+  { pathMatch: 'full',  path: 'jobs/:id/edit', component: JobPostingEditComponent },
   { pathMatch: 'full',  path: 'contact', component: ContactUsComponent },
+  { pathMatch: 'full',  path: 'login', component: LoginComponent },
   { pathMatch: 'full',  path: '**', component: PageNotFoundComponent }
 ]
 
@@ -36,11 +44,14 @@ const appRoutes: Routes = [
     PageNotFoundComponent,
     JobPostingListComponent,
     JobPostingDetailComponent,
-    ContactUsComponent
+    ContactUsComponent,
+    JobPostingNewComponent,
+    JobPostingEditComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     FlashMessagesModule.forRoot(),
     RouterModule.forRoot(appRoutes)
