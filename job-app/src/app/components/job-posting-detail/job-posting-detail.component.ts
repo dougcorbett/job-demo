@@ -40,4 +40,10 @@ export class JobPostingDetailComponent implements OnInit {
       .then(() => this.router.navigate(['jobs']));
     }
   }
+
+  isAuthenticated(): boolean {
+    //console.log(this.authService.currentUser);
+    return this.authService.isAuthenticated();
+    //return false;
+  }
 }

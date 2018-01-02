@@ -5,7 +5,7 @@
   
     <div class="col-12">
         <h2>{{ job?.position }} <span style="font-size: 12px; margin-left:20px;">posted on {{ job?.postedDate | date: 'mediumDate' }}</span>
-        <div style="float:right;" *ngIf="hasPermission()">
+        <div style="float:right;" *ngIf="isAuthenticated()">
             <a class="btn btn-warning" [routerLink]="['/jobs/' + job?._id + '/edit']">Edit</a>
             <!-- <button class="btn btn-warning" (click)="edit(job._id)">Edit</button>
              -->
